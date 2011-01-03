@@ -4,6 +4,8 @@ require 'rubygems'
 require 'fog'
 
 Fog.credential = :otlive
+HOSTS_FILE = '/etc/hosts'
+AUTO_GENERATED = 'auto-generated'
 
 def load_hosts(filename)
   lines = []
@@ -26,22 +28,22 @@ def generate_hosts
   generated_hosts = []
   ec2.servers.all.each do |server|
     if server.ip_address
-      generated_hosts << "#{server.ip_address} #{server.tags['role']}.public  # auto-generated\n"
+      generated_hosts << "#{server.ip_address} #{server.tags['role']}.public  # #{AUTO_GENERATED}\n"
     end
     if server.private_ip_address
-      generated_hosts << "#{server.private_ip_address} #{server.tags['role']}.private  # auto-generated\n"
+      generated_hosts << "#{server.private_ip_address} #{server.tags['role']}.private  # #{AUTO_GENERATED}\n"
     end
   end
   generated_hosts
 end
 
-original_hosts = load_hosts('hosts')
+original_hosts = load_hosts(HOSTS_FILE)
 
-stripped_hosts = original_hosts.reject{ |l| l.match('auto-generated') }
+stripped_hosts = original_hosts.reject{ |l| l.match(AUTO_GENERATED) }
 
 new_hosts = stripped_hosts + generate_hosts
 
 if new_hosts != original_hosts
-  save_hosts('hosts', new_hosts)
+  save_hosts(HOSTS_FILE, new_hosts)
 end
 
