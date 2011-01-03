@@ -1,0 +1,26 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    builder (3.0.0)
+    excon (0.3.6)
+    fog (0.3.34)
+      builder
+      excon (>= 0.3.6)
+      formatador (>= 0.0.16)
+      json
+      mime-types
+      net-ssh (>= 2.0.23)
+      nokogiri (>= 1.4.4)
+      ruby-hmac
+    formatador (0.0.16)
+    json (1.4.6)
+    mime-types (1.16)
+    net-ssh (2.0.23)
+    nokogiri (1.4.4)
+    ruby-hmac (0.4.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  fog
