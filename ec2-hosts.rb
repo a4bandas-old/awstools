@@ -6,6 +6,7 @@ require 'fog'
 Fog.credential = :otlive
 HOSTS_FILE = '/etc/hosts'
 AUTO_GENERATED = 'auto-generated'
+NOTIFY_SCRIPT = '/Users/jschwindt/Projects/ec2ruby/host_notification.sh'
 
 def load_hosts(filename)
   lines = []
@@ -45,5 +46,8 @@ new_hosts = stripped_hosts + generate_hosts
 
 if new_hosts != original_hosts
   save_hosts(HOSTS_FILE, new_hosts)
+  if NOTIFY_SCRIPT
+    system NOTIFY_SCRIPT
+  end
 end
 
