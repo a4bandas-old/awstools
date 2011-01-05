@@ -8,7 +8,7 @@ options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [-c credential] [role]"
 
-  options[:credential] = :otlive
+  options[:credential] = :kedin
   opts.on( '-c', '--credential CRED', 'Use specific credentials from ~/.fog' ) do |cred|
     options[:credential] = cred.to_sym
   end
@@ -22,6 +22,8 @@ Fog.credential = options[:credential]
 ec2 = Fog::AWS::Compute.new
 
 servers = ec2.servers.all
+
+puts "# Servers for #{options[:credential]}"
 
 servers.each do |server|
   if role == :all

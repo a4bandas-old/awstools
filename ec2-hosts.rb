@@ -3,10 +3,10 @@
 require 'rubygems'
 require 'fog'
 
-Fog.credential = :otlive
+Fog.credential = :kedin
 HOSTS_FILE = '/etc/hosts'
 AUTO_GENERATED = 'auto-generated'
-NOTIFY_SCRIPT = '/Users/jschwindt/Projects/ec2ruby/host_notification.sh'
+NOTIFY_SCRIPT = nil    # ejemplo: '/etc/init.d/nginx reload'
 
 def load_hosts(filename)
   lines = []
