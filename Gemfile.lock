@@ -15,12 +15,21 @@ GEM
     formatador (0.0.16)
     json (1.4.6)
     mime-types (1.16)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
     net-ssh (2.0.23)
+    net-ssh-gateway (1.0.1)
+      net-ssh (>= 1.99.1)
     nokogiri (1.4.4)
     ruby-hmac (0.4.0)
+    screwcap (0.6.1)
+      net-scp (>= 1.0.4)
+      net-ssh (>= 2.0.23)
+      net-ssh-gateway (>= 1.0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   fog
+  screwcap
