@@ -1,0 +1,3 @@
+/etc                              s3://backup.otlive.es/lbimgnfs/
+/root/scripts                     s3://backup.otlive.es/lbimgnfs/root/
+
