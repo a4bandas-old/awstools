@@ -1,0 +1,5 @@
+= README
+
+* Ejecutar git clone y luego bundle install
+* Crear archivo ~/.fog con las credenciales de AWS correspondientes
+
