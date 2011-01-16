@@ -7,6 +7,8 @@ server :all_servers, :user => 'otlive', :addresses => [
   '46.137.11.163',
   '46.51.143.86',
   '46.51.162.96',
+  '46.51.164.99',
+  '46.137.14.39',
 ]
 
 server :app_servers, :user => 'otlive', :addresses => [
@@ -16,6 +18,8 @@ server :app_servers, :user => 'otlive', :addresses => [
   '46.137.11.163',
   '46.51.143.86',
   '46.51.162.96',
+  '46.51.164.99',
+  '46.137.14.39',
 ]
 
 server :single_server, :user => 'otlive', :address => 'otlivefe1'
@@ -46,5 +50,9 @@ end
 
 task :restart, :servers => :app_servers, :parallel => false do
   run "touch #{app_dir}/tmp/restart.txt"
+end
+
+task :status, :servers => :all_servers do
+  run "w | grep average; netstat -nat | grep ESTABLISH | wc -l"
 end
 
