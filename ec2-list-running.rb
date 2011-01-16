@@ -8,7 +8,7 @@ options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [-c credential] [role]"
 
-  options[:credential] = :kedin
+  options[:credential] = :otlive
   opts.on( '-c', '--credential CRED', 'Use specific credentials from ~/.fog' ) do |cred|
     options[:credential] = cred.to_sym
   end

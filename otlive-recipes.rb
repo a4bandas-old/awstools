@@ -3,11 +3,19 @@ server :all_servers, :user => 'otlive', :addresses => [
   'otlivelb',
   'otlivefe1',
   'otlivefe2',
+  '46.51.155.80',
+  '46.137.11.163',
+  '46.51.143.86',
+  '46.51.162.96',
 ]
 
 server :app_servers, :user => 'otlive', :addresses => [
   'otlivefe1',
   'otlivefe2',
+  '46.51.155.80',
+  '46.137.11.163',
+  '46.51.143.86',
+  '46.51.162.96',
 ]
 
 server :single_server, :user => 'otlive', :address => 'otlivefe1'
@@ -26,6 +34,13 @@ task :migrate, :servers => :single_server do
   run <<-EOC
     cd #{app_dir}
     rake db:migrate
+  EOC
+end
+
+task :whenever, :servers => :single_server do
+  run <<-EOC
+    cd #{app_dir}
+    whenever --update
   EOC
 end
 

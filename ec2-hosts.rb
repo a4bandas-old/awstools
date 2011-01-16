@@ -3,7 +3,7 @@
 require 'rubygems'
 require 'fog'
 
-Fog.credential = :kedin
+Fog.credential = :otlive
 HOSTS_FILE = '/etc/hosts'
 AUTO_GENERATED = 'auto-generated'
 NOTIFY_SCRIPT = nil    # ejemplo: '/etc/init.d/nginx reload'
