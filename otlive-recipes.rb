@@ -3,11 +3,19 @@ server :all_servers, :user => 'otlive', :addresses => [
   'otlivelb',
   'otlivefe1',
   'otlivefe2',
+  'otlivefe3',
+  'otlivefe4',
+  'otlivefe5',
+  'otlivefe6'
 ]
 
 server :app_servers, :user => 'otlive', :addresses => [
   'otlivefe1',
   'otlivefe2',
+  'otlivefe3',
+  'otlivefe4',
+  'otlivefe5',
+  'otlivefe6'
 ]
 
 server :single_server, :user => 'otlive', :address => 'otlivefe1'
