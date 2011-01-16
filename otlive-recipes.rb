@@ -41,6 +41,20 @@ task :migrate, :servers => :single_server do
   EOC
 end
 
+task :delayed_job_restart, :servers => :app_servers do
+  run <<-EOC
+    cd #{app_dir}
+    ./script/delayed_job restart
+  EOC
+end
+
+task :backgroup_pub_restart, :servers => :single_server do
+  run <<-EOC
+    cd #{app_dir}
+    ./script/background_publish restart
+  EOC
+end
+
 task :whenever, :servers => :single_server do
   run <<-EOC
     cd #{app_dir}
