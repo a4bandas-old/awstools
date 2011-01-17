@@ -24,6 +24,8 @@ server :app_servers, :user => 'otlive', :addresses => [
 
 server :single_server, :user => 'otlive', :address => 'otlivefe1'
 
+server :special_frontend, :user => 'otlive', :address => "46.137.117.188" 
+
 set :app_dir, '/var/www/otlive'
 set :branch, 'otlive_production'
 
@@ -31,6 +33,14 @@ task :update, :servers => :all_servers do
   run <<-EOC
     cd #{app_dir}
     git pull origin #{branch}
+  EOC
+end
+
+task :update_special, :servers => :special_frontend do
+  run <<-EOC
+    cd /var/www/cmsposter
+    git pull origin master
+    touch tmp/restart.txt
   EOC
 end
 
