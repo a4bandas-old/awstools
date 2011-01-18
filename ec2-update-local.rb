@@ -7,7 +7,7 @@ require 'fog'
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{$0} [-c credential] [-n notification script] [-f force] -l|file1..fileN"
+  opts.banner = "Usage: #{$0} [-c credential] [-n notification script] [-f force] [-l] file1..fileN"
 
   options[:credential] = :otlive
   opts.on( '-c', '--credential CRED', 'Use specific credentials from ~/.fog' ) do |cred|
@@ -108,11 +108,9 @@ saved_hosts = load_hosts(HOSTS_STAT_FILE)
 
 if options[:list_running]
   puts "# Running hosts for '#{options[:credential]}'"
-  get_running_hosts(true)
-  exit
-else
-  running_hosts = get_running_hosts
 end
+
+running_hosts = get_running_hosts(options[:list_running])
 
 if running_hosts != saved_hosts || options[:force]
   save_hosts(HOSTS_STAT_FILE, running_hosts)
