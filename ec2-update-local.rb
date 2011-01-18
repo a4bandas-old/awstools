@@ -7,7 +7,7 @@ require 'fog'
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{$0} [-c credential] [-n notification script] [-f force] file1..fileN"
+  opts.banner = "Usage: #{$0} [-c credential] [-n notification script] [-f force] -l|file1..fileN"
 
   options[:credential] = :otlive
   opts.on( '-c', '--credential CRED', 'Use specific credentials from ~/.fog' ) do |cred|
@@ -19,10 +19,13 @@ optparse = OptionParser.new do |opts|
   opts.on( '-f', '--force', 'Force update of target files' ) do
     options[:force] = true
   end
+  opts.on( '-l', '--list-running', 'Show running hosts' ) do
+    options[:list_running] = true
+  end
 end
 optparse.parse!
 
-if ARGV.length == 0
+if ARGV.length == 0 && !options[:list_running]
   puts optparse
   exit
 end
@@ -58,12 +61,15 @@ def save_hosts(filename, hosts)
   end
 end
 
-def get_running_hosts
+def get_running_hosts(show = false)
   ec2 = Fog::AWS::Compute.new
   hosts = {}
   ec2.servers.all.each do |server|
     if server.state == 'running'
       hosts[server.tags['role']] = { :public => server.ip_address, :private => server.private_ip_address }
+      if show
+        puts "host: #{server.tags['role']}, public: #{server.ip_address}, private: #{server.private_ip_address}"
+      end
     end
   end
   hosts.keys.sort.map {|k| hosts[k].merge(:host => k) }
@@ -100,7 +106,13 @@ end
 
 saved_hosts = load_hosts(HOSTS_STAT_FILE)
 
-running_hosts = get_running_hosts
+if options[:list_running]
+  puts "# Running hosts for '#{options[:credential]}'"
+  get_running_hosts(true)
+  exit
+else
+  running_hosts = get_running_hosts
+end
 
 if running_hosts != saved_hosts || options[:force]
   save_hosts(HOSTS_STAT_FILE, running_hosts)
