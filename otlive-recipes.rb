@@ -39,6 +39,13 @@ task :update, :servers => [:backend, :load_balancer, :frontends] do
   EOC
 end
 
+task :install_bundle, :servers => [:frontends] do
+  run <<-EOC
+    cd #{app_dir}
+    bundle install
+  EOC
+end
+
 task :update_special, :servers => :special_frontend do
   run <<-EOC
     cd /var/www/cmsposter
