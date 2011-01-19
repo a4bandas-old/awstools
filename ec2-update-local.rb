@@ -88,8 +88,12 @@ def update_file(filename, hosts)
         outfile.puts line
         match, template = md[1,2]
         hosts.each do |host|
-          if host[:host].match(match)
-            outfile.puts template.gsub(/\{(\S+)\}/) { host[$1.to_sym] }
+          if host[:host]
+            if host[:host].match(match)
+              outfile.puts template.gsub(/\{(\S+)\}/) { host[$1.to_sym] }
+            end
+          else
+            puts hosts.inspect
           end
         end
       end
