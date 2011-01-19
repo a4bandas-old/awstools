@@ -1,0 +1,6 @@
+# Evita que una instancia se puede terminar
+ec2-modify-instance-attribute --disable-api-termination true i-78818f0f
+
+# Subir a s3 con acl public
+s3cmd put --acl-public boot-frontend.sh s3://boot.otlive.es/
+
