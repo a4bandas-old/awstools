@@ -30,6 +30,7 @@ fi
 
 # Actualiza el código de la aplicación
 su -m otlive -c "cd /var/www/otlive; git pull origin otlive_production"
+[[ -s "/usr/local/rvm/scripts/rvm" ]] && source "/usr/local/rvm/scripts/rvm"  # This loads RVM into a shell session.
 cd /var/www/otlive && bundle install
 
 # Finalmente arranca el webserver
