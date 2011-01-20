@@ -26,7 +26,7 @@ end
 Fog.credential = options[:credential]
 ec2 = Fog::AWS::Compute.new
 
-servers = ec2.servers.all
+servers = ec2.servers.all.sort{|a,b| a.tags['role'] <=> b.tags['role'] }
 
 case action
 when 'status'
