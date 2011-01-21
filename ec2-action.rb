@@ -48,7 +48,7 @@ def add_frontend(num, servers)
 end
 
 def remove_frontend(num, servers)
-  servers.each do |server|
+  servers.reverse.each do |server|
     if server.tags['role'].match(/^frontend\d+$/) && server.state == 'running'
       next if server.tags['role'].match(/^frontend[12]$/) 
       puts "Stopping '#{server.tags['role']}'"
