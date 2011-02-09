@@ -27,6 +27,9 @@ EOF
 # Actualiza el /etc/hosts con los servidores que están correindo.
 /root/scripts/ec2-update-local.rb -l -f -c otlive /etc/hosts
 
+# Se asegura que el NFS esté montado
+/bin/mount /vol/data/nfs
+
 # Actualiza el código de la aplicación
 su -m otlive -c "cd /var/www/otlive; git pull origin otlive_production"
 [[ -s "/usr/local/rvm/scripts/rvm" ]] && source "/usr/local/rvm/scripts/rvm"  # This loads RVM into a shell session.
