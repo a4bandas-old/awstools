@@ -36,6 +36,10 @@ ec2 = Fog::AWS::Compute.new
 
 servers = ec2.servers.all.sort{|a,b| a.tags['role'] <=> b.tags['role'] }
 
+def running_count(servers)
+   servers.count { |server| server.tags['role'].match(/^frontend\d+$/) && server.state == 'running' }
+end
+
 def add_frontend(num, servers)
   servers.each do |server|
     if server.tags['role'].match(/^frontend\d+$/) && server.state == 'stopped'
@@ -50,7 +54,7 @@ end
 def remove_frontend(num, servers)
   servers.reverse.each do |server|
     if server.tags['role'].match(/^frontend\d+$/) && server.state == 'running'
-      next if server.tags['role'].match(/^frontend[12]$/) 
+      next if server.tags['role'].match(/^frontend0[12]$/) 
       puts "Stopping '#{server.tags['role']}'"
       server.stop
       num -= 1
@@ -58,6 +62,8 @@ def remove_frontend(num, servers)
     end
   end
 end
+
+running = running_count(servers)
 
 case action
 when 'status'
@@ -68,9 +74,10 @@ when 'status'
 when 'add-frontend'
   add_frontend(1, servers)
 when 'remove-frontend'
-  remove_frontend(1, servers)
+  if running > 2
+    remove_frontend(1, servers)
+  end
 when 'force-run'
-  running = servers.count { |server| server.tags['role'].match(/^frontend\d+$/) && server.state == 'running' }
   if running < options[:force_num]
     puts "Now running: #{running}, starting #{options[:force_num] - running}"
     add_frontend(options[:force_num] - running, servers)
