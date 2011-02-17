@@ -62,7 +62,7 @@ def save_hosts(filename, hosts)
 end
 
 def get_running_hosts(show = false)
-  ec2 = Fog::AWS::Compute.new
+  ec2 = Fog::Compute.new(:provider => 'AWS')
   hosts = {}
   ec2.servers.all.each do |server|
     if server.state == 'running'
