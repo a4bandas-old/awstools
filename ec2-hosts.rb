@@ -25,7 +25,7 @@ def save_hosts(filename, lines)
 end
 
 def generate_hosts
-  ec2 = Fog::AWS::Compute.new
+  ec2 = Fog::Compute.new(:provider => 'AWS')
   generated_hosts = []
   ec2.servers.all.each do |server|
     if server.ip_address

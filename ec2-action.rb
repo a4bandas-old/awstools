@@ -32,7 +32,7 @@ unless %w(status add-frontend remove-frontend force-run).include? action
 end
 
 Fog.credential = options[:credential]
-ec2 = Fog::AWS::Compute.new
+ec2 = Fog::Compute.new(:provider => 'AWS')
 
 servers = ec2.servers.all.sort{|a,b| a.tags['role'] <=> b.tags['role'] }
 
