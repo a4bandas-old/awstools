@@ -66,9 +66,9 @@ def get_running_hosts(show = false)
   hosts = {}
   ec2.servers.all.each do |server|
     if server.state == 'running'
-      hosts[server.tags['role']] = { :public => server.ip_address, :private => server.private_ip_address }
+      hosts[server.tags['role']] = { :public => server.public_ip_address, :private => server.private_ip_address }
       if show
-        puts "host: #{server.tags['role']}, public: #{server.ip_address}, private: #{server.private_ip_address}"
+        puts "host: #{server.tags['role']}, public: #{server.public_ip_address}, private: #{server.private_ip_address}"
       end
     end
   end
